@@ -76,7 +76,7 @@ pnpm dev
 3. 修改 `wrangler.json` 中 KV 和 R2 的值
 
 ```bash
-pnpm deploy
+pnpm run deploy
 ```
 
 ## 贡献

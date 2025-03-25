@@ -34,11 +34,11 @@
       "kv_namespaces": [
         {
           "binding": "HACKER_NEWS_KV",
-          "id": "4d458dadadea42f8b8198fe3e29f858d"
+          "id": "0c3ad5f3d5324dfbaa2217f85b955074"
         },
         {
           "binding": "NEXT_CACHE_WORKERS_KV",
-          "id": "4d458dadadea42f8b8198fe3e29f858d"
+          "id": "209192560bb148e6b7f081249b5608f8"
         }
       ]
     }

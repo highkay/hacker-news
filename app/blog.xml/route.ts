@@ -32,14 +32,28 @@ export async function GET() {
   const { env } = getCloudflareContext()
   const runEnv = env.NEXTJS_ENV
   const pastDays = getPastDays(keepDays)
-  const posts = (await Promise.all(
-    pastDays.map(async (day) => {
-      const post = await env.HACKER_NEWS_KV.get(`content:${runEnv}:hacker-news:${day}`, 'json')
-      return post as unknown as Article
-    }),
-  )).filter(Boolean)
+  const sources = ['hacker-news', 'linux-do', 'v2ex']
 
-  for (const post of posts) {
+  // 获取所有来源的文章
+  const allPosts = (await Promise.all(
+    pastDays.flatMap(async (day) => {
+      return await Promise.all(
+        sources.map(async (source) => {
+          const post = await env.HACKER_NEWS_KV.get(`content:${runEnv}:${source}:${day}`, 'json')
+          return post as unknown as Article
+        }),
+      )
+    }),
+  )).flat().filter(Boolean)
+
+  // 按日期倒序排序
+  allPosts.sort((a, b) => {
+    const dateA = new Date(a.updatedAt || a.date).getTime()
+    const dateB = new Date(b.updatedAt || b.date).getTime()
+    return dateB - dateA
+  })
+
+  for (const post of allPosts) {
     const audioInfo = await env.HACKER_NEWS_R2.head(post.audio)
 
     feed.addItem({
