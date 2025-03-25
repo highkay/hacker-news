@@ -5,7 +5,7 @@
   "packageManager": "pnpm@9.15.5",
   "scripts": {
     "dev": "next dev",
-    "build": "opennextjs-cloudflare build",
+    "build": "opennextjs-cloudflare",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
